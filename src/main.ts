@@ -17,7 +17,7 @@ scene.add(axesHelper);
  */
 const group = new THREE.Group();
 group.scale.y = 2;
-group.rotation.y = 0.2;
+group.rotation.y = 0.1;
 scene.add(group);
 
 const cube1 = new THREE.Mesh(
