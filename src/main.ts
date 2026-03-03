@@ -1,7 +1,5 @@
 import * as THREE from "three";
-import TWEEN from "@tweenjs/tween.js";
-
-console.log(TWEEN);
+import { Tween } from "@tweenjs/tween.js";
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
@@ -68,7 +66,35 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 
+/**
+ * Animate
+ */
+const tween1 = new Tween(cube1.position)
+  .to({ y: 0.3 }, 1000)
+  .delay(1000)
+  .repeat(Infinity)
+  .yoyo(true)
+  .start();
+
+const tween2 = new Tween(cube2.position)
+  .to({ y: 0.3 }, 1000)
+  .delay(2000)
+  .repeat(Infinity)
+  .yoyo(true)
+  .start();
+
+const tween3 = new Tween(cube3.position)
+  .to({ y: 0.3 }, 1000)
+  .delay(3000)
+  .repeat(Infinity)
+  .yoyo(true)
+  .start();
+
 const tick = () => {
+  tween1.update();
+  tween2.update();
+  tween3.update();
+
   // Render
   renderer.render(scene, camera);
 
