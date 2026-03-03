@@ -25,7 +25,7 @@ const cube1 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
   new THREE.MeshBasicMaterial({ color: 0xff0000 }),
 );
-cube1.position.x = -1.5;
+cube1.position.x = -2;
 group.add(cube1);
 
 const cube2 = new THREE.Mesh(
@@ -39,7 +39,7 @@ const cube3 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
   new THREE.MeshBasicMaterial({ color: "blue" }),
 );
-cube3.position.x = 1.5;
+cube3.position.x = 2;
 group.add(cube3);
 
 /**
@@ -54,7 +54,7 @@ const sizes = {
  * Camera
  */
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
-camera.position.z = 3;
+camera.position.z = 5;
 // camera.lookAt(new THREE.Vector3(0, - 1, 0))
 scene.add(camera);
 
@@ -69,25 +69,22 @@ renderer.setSize(sizes.width, sizes.height);
 /**
  * Animate
  */
-const tween1 = new Tween(cube1.position)
-  .to({ y: 0.3 }, 1000)
-  .delay(1000)
+const tween1 = new Tween(cube1.rotation)
+  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
   .repeat(Infinity)
-  .yoyo(true)
+  .easing(Easing.Linear.None)
   .start();
 
-const tween2 = new Tween(cube2.position)
-  .to({ y: -0.3 }, 1000)
-  .delay(1000)
+const tween2 = new Tween(cube2.rotation)
+  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
   .repeat(Infinity)
-  .yoyo(true)
+  .easing(Easing.Linear.None)
   .start();
 
-const tween3 = new Tween(cube3.position)
-  .to({ y: 0.3 }, 1000)
-  .delay(1000)
+const tween3 = new Tween(cube3.rotation)
+  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
   .repeat(Infinity)
-  .yoyo(true)
+  .easing(Easing.Linear.None)
   .start();
 
 const tick = () => {
