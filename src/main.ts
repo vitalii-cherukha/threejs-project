@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Tween } from "@tweenjs/tween.js";
+import { Tween, Easing } from "@tweenjs/tween.js";
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
@@ -77,15 +77,15 @@ const tween1 = new Tween(cube1.position)
   .start();
 
 const tween2 = new Tween(cube2.position)
-  .to({ y: 0.3 }, 1000)
-  .delay(2000)
+  .to({ y: -0.3 }, 1000)
+  .delay(1000)
   .repeat(Infinity)
   .yoyo(true)
   .start();
 
 const tween3 = new Tween(cube3.position)
   .to({ y: 0.3 }, 1000)
-  .delay(3000)
+  .delay(1000)
   .repeat(Infinity)
   .yoyo(true)
   .start();
