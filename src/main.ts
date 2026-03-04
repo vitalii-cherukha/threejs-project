@@ -45,9 +45,24 @@ const cube2 = new THREE.Mesh(
 cube2.position.x = 0;
 group.add(cube2);
 
+const geometry = new THREE.BufferGeometry();
+
+const count = 500;
+
+const positionsArray = new Float32Array(count * 3 * 3);
+
+for (let i = 0; i < count * 3 * 3; i++) {
+  positionsArray[i] = Math.random() - 0.5;
+}
+
+const positionAttribute = new THREE.BufferAttribute(positionsArray, 3);
+
+geometry.setAttribute("position", positionAttribute);
+
 const cube3 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: "blue" }),
+  geometry,
+
+  new THREE.MeshBasicMaterial({ color: "blue", wireframe: true }),
 );
 cube3.position.x = 2;
 group.add(cube3);
