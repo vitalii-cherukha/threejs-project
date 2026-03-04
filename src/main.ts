@@ -144,30 +144,30 @@ window.addEventListener("dblclick", () => {
 /**
  * Animate
  */
-// const tween1 = new Tween(cube1.rotation)
-//   .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
-//   .repeat(Infinity)
-//   .easing(Easing.Linear.None)
-//   .start();
+const tween1 = new Tween(cube1.rotation)
+  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 30000)
+  .repeat(Infinity)
+  .easing(Easing.Linear.None)
+  .start();
 
-// const tween2 = new Tween(cube2.rotation)
-//   .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
-//   .repeat(Infinity)
-//   .easing(Easing.Linear.None)
-//   .start();
+const tween2 = new Tween(cube2.rotation)
+  .to({ x: Math.PI * -2, y: Math.PI * -2 }, 30000)
+  .repeat(Infinity)
+  .easing(Easing.Linear.None)
+  .start();
 
-// const tween3 = new Tween(cube3.rotation)
-//   .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
-//   .repeat(Infinity)
-//   .easing(Easing.Linear.None)
-//   .start();
+const tween3 = new Tween(cube3.rotation)
+  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 30000)
+  .repeat(Infinity)
+  .easing(Easing.Linear.None)
+  .start();
 
 const clock = new THREE.Clock();
 
 const tick = () => {
-  // tween1.update();
-  // tween2.update();
-  // tween3.update();
+  tween1.update();
+  tween2.update();
+  tween3.update();
 
   controls.update();
 
