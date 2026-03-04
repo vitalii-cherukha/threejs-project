@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { Tween, Easing } from "@tweenjs/tween.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import GUI from "lil-gui";
 
 interface WebkitDocument extends Document {
   webkitFullscreenElement?: Element;
@@ -10,6 +11,9 @@ interface WebkitDocument extends Document {
 interface WebkitHTMLElement extends HTMLElement {
   webkitRequestFullscreen?: () => Promise<void>;
 }
+
+// Debug
+const gui = new GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
@@ -66,6 +70,13 @@ const cube3 = new THREE.Mesh(
 );
 cube3.position.x = 2;
 group.add(cube3);
+
+gui
+  .add(cube3.position, "y")
+  .min(-3)
+  .max(3)
+  .step(0.01)
+  .name("Cube 3 Y Position");
 
 /**
  * Sizes
