@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { Tween, Easing } from "@tweenjs/tween.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
@@ -58,6 +59,10 @@ camera.position.z = 5;
 // camera.lookAt(new THREE.Vector3(0, - 1, 0))
 scene.add(camera);
 
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+
 /**
  * Renderer
  */
@@ -69,28 +74,32 @@ renderer.setSize(sizes.width, sizes.height);
 /**
  * Animate
  */
-const tween1 = new Tween(cube1.rotation)
-  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
-  .repeat(Infinity)
-  .easing(Easing.Linear.None)
-  .start();
+// const tween1 = new Tween(cube1.rotation)
+//   .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
+//   .repeat(Infinity)
+//   .easing(Easing.Linear.None)
+//   .start();
 
-const tween2 = new Tween(cube2.rotation)
-  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
-  .repeat(Infinity)
-  .easing(Easing.Linear.None)
-  .start();
+// const tween2 = new Tween(cube2.rotation)
+//   .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
+//   .repeat(Infinity)
+//   .easing(Easing.Linear.None)
+//   .start();
 
-const tween3 = new Tween(cube3.rotation)
-  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
-  .repeat(Infinity)
-  .easing(Easing.Linear.None)
-  .start();
+// const tween3 = new Tween(cube3.rotation)
+//   .to({ x: Math.PI * 2, y: Math.PI * 2 }, 3000)
+//   .repeat(Infinity)
+//   .easing(Easing.Linear.None)
+//   .start();
+
+const clock = new THREE.Clock();
 
 const tick = () => {
-  tween1.update();
-  tween2.update();
-  tween3.update();
+  // tween1.update();
+  // tween2.update();
+  // tween3.update();
+
+  controls.update();
 
   // Render
   renderer.render(scene, camera);
