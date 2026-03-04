@@ -2,6 +2,15 @@ import * as THREE from "three";
 import { Tween, Easing } from "@tweenjs/tween.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
+interface WebkitDocument extends Document {
+  webkitFullscreenElement?: Element;
+  webkitExitFullscreen?: () => Promise<void>;
+}
+
+interface WebkitHTMLElement extends HTMLElement {
+  webkitRequestFullscreen?: () => Promise<void>;
+}
+
 // Canvas
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
 
@@ -94,6 +103,28 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// Fullscreen on double click
+window.addEventListener("dblclick", () => {
+  const webkitDoc = document as WebkitDocument;
+  const fullscreenElement =
+    document.fullscreenElement || webkitDoc.webkitFullscreenElement;
+
+  if (!fullscreenElement) {
+    if (canvas.requestFullscreen) {
+      canvas.requestFullscreen();
+    } else if ((canvas as WebkitHTMLElement).webkitRequestFullscreen) {
+      (canvas as WebkitHTMLElement).webkitRequestFullscreen!();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (webkitDoc.webkitExitFullscreen) {
+      webkitDoc.webkitExitFullscreen();
+    }
+  }
+});
 
 /**
  * Animate
