@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Tween, Easing } from "@tweenjs/tween.js";
+import { Tween, Easing, Group } from "@tweenjs/tween.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import GUI from "lil-gui";
 
@@ -12,8 +12,11 @@ interface WebkitHTMLElement extends HTMLElement {
   webkitRequestFullscreen?: () => Promise<void>;
 }
 
+const tweenGroup = new Group();
+
 // Debug
 const gui = new GUI();
+const debugObject: any = {};
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
@@ -30,6 +33,8 @@ scene.add(axesHelper);
 /**
  * Objects
  */
+debugObject.color = "#7278a1";
+
 const group = new THREE.Group();
 group.scale.y = 2;
 group.rotation.y = 0.1;
@@ -66,7 +71,7 @@ geometry.setAttribute("position", positionAttribute);
 const cube3 = new THREE.Mesh(
   geometry,
 
-  new THREE.MeshBasicMaterial({ color: "blue", wireframe: true }),
+  new THREE.MeshBasicMaterial({ color: debugObject.color, wireframe: true }),
 );
 cube3.position.x = 2;
 group.add(cube3);
@@ -77,6 +82,25 @@ gui
   .max(3)
   .step(0.01)
   .name("Cube 3 Y Position");
+
+gui.add(cube3, "visible").name("Cube 3 Visible");
+
+gui.add(cube3.material, "wireframe").name("Cube 3 Wireframe");
+
+gui
+  .addColor(debugObject, "color")
+  .onChange(() => {
+    (cube3.material as THREE.MeshBasicMaterial).color.set(debugObject.color);
+  })
+  .name("Cube 3 Color");
+
+debugObject.spin = () => {
+  new Tween(cube3.rotation, tweenGroup)
+    .to({ y: cube3.rotation.y + Math.PI * 2 }, 1000)
+    .start();
+};
+
+gui.add(debugObject, "spin").name("Spin Cube 3");
 
 /**
  * Sizes
@@ -155,20 +179,20 @@ window.addEventListener("dblclick", () => {
 /**
  * Animate
  */
-const tween1 = new Tween(cube1.rotation)
-  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 30000)
+const tween1 = new Tween(cube1.rotation, tweenGroup)
+  .to({ x: Math.PI * 2 }, 30000)
   .repeat(Infinity)
   .easing(Easing.Linear.None)
   .start();
 
-const tween2 = new Tween(cube2.rotation)
-  .to({ x: Math.PI * -2, y: Math.PI * -2 }, 30000)
+const tween2 = new Tween(cube2.rotation, tweenGroup)
+  .to({ x: Math.PI * -2 }, 30000)
   .repeat(Infinity)
   .easing(Easing.Linear.None)
   .start();
 
-const tween3 = new Tween(cube3.rotation)
-  .to({ x: Math.PI * 2, y: Math.PI * 2 }, 30000)
+const tween3 = new Tween(cube3.rotation, tweenGroup)
+  .to({ x: Math.PI * 2 }, 30000)
   .repeat(Infinity)
   .easing(Easing.Linear.None)
   .start();
@@ -176,9 +200,7 @@ const tween3 = new Tween(cube3.rotation)
 const clock = new THREE.Clock();
 
 const tick = () => {
-  tween1.update();
-  tween2.update();
-  tween3.update();
+  tweenGroup.update();
 
   controls.update();
 
