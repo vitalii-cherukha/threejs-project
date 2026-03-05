@@ -15,7 +15,24 @@ interface WebkitHTMLElement extends HTMLElement {
 const tweenGroup = new Group();
 
 // Debug
-const gui = new GUI();
+const gui = new GUI({
+  width: 400,
+  title: "Three.js Journey - Debug",
+  closeFolders: false,
+});
+gui.close();
+
+gui.hide();
+window.addEventListener("keydown", (event) => {
+  if (event.key === "h") {
+    if (gui._hidden) {
+      gui.show();
+    } else {
+      gui.hide();
+    }
+  }
+});
+
 const debugObject: any = {};
 
 // Canvas
@@ -39,6 +56,9 @@ const group = new THREE.Group();
 group.scale.y = 2;
 group.rotation.y = 0.1;
 scene.add(group);
+
+const cubeTweaks3 = gui.addFolder("Cube 3");
+cubeTweaks3.close();
 
 const cube1 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
@@ -76,18 +96,18 @@ const cube3 = new THREE.Mesh(
 cube3.position.x = 2;
 group.add(cube3);
 
-gui
+cubeTweaks3
   .add(cube3.position, "y")
   .min(-3)
   .max(3)
   .step(0.01)
   .name("Cube 3 Y Position");
 
-gui.add(cube3, "visible").name("Cube 3 Visible");
+cubeTweaks3.add(cube3, "visible").name("Cube 3 Visible");
 
-gui.add(cube3.material, "wireframe").name("Cube 3 Wireframe");
+cubeTweaks3.add(cube3.material, "wireframe").name("Cube 3 Wireframe");
 
-gui
+cubeTweaks3
   .addColor(debugObject, "color")
   .onChange(() => {
     (cube3.material as THREE.MeshBasicMaterial).color.set(debugObject.color);
@@ -100,7 +120,26 @@ debugObject.spin = () => {
     .start();
 };
 
-gui.add(debugObject, "spin").name("Spin Cube 3");
+cubeTweaks3.add(debugObject, "spin").name("Spin Cube 3");
+
+debugObject.subdivision = 2;
+
+cubeTweaks3
+  .add(debugObject, "subdivision")
+  .min(1)
+  .max(20)
+  .step(1)
+  .onFinishChange(() => {
+    cube3.geometry.dispose();
+    cube3.geometry = new THREE.BoxGeometry(
+      1,
+      1,
+      1,
+      debugObject.subdivision,
+      debugObject.subdivision,
+      debugObject.subdivision,
+    );
+  });
 
 /**
  * Sizes
