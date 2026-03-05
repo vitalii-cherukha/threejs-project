@@ -33,7 +33,7 @@ loadingManager.onError = (url) => {
   console.log(`There was an error loading ${url}`);
 };
 
-const textureLoader = new THREE.TextureLoader();
+const textureLoader = new THREE.TextureLoader(loadingManager);
 
 const colorTexture = textureLoader.load("../static/textures/door/color.jpg");
 colorTexture.colorSpace = THREE.SRGBColorSpace;
