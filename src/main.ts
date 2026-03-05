@@ -15,12 +15,13 @@ interface WebkitHTMLElement extends HTMLElement {
 // Textures
 const image = new Image();
 const texture = new THREE.Texture(image);
+texture.colorSpace = THREE.SRGBColorSpace;
 
-image.onload = () => {
+image.addEventListener("load", () => {
   texture.needsUpdate = true;
-};
+});
 
-image.src = "/textures/door/color.jpg";
+image.src = "../static/textures/door/color.jpg";
 
 const tweenGroup = new Group();
 
