@@ -12,6 +12,16 @@ interface WebkitHTMLElement extends HTMLElement {
   webkitRequestFullscreen?: () => Promise<void>;
 }
 
+// Textures
+const image = new Image();
+const texture = new THREE.Texture(image);
+
+image.onload = () => {
+  texture.needsUpdate = true;
+};
+
+image.src = "/textures/door/color.jpg";
+
 const tweenGroup = new Group();
 
 // Debug
@@ -69,7 +79,7 @@ group.add(cube1);
 
 const cube2 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: "green" }),
+  new THREE.MeshBasicMaterial({ map: texture }),
 );
 cube2.position.x = 0;
 group.add(cube2);
