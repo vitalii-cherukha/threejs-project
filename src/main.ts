@@ -13,19 +13,52 @@ interface WebkitHTMLElement extends HTMLElement {
 }
 
 // Textures
-const image = new Image();
-const texture = new THREE.Texture(image);
-texture.colorSpace = THREE.SRGBColorSpace;
+const loadingManager = new THREE.LoadingManager();
 
-image.addEventListener("load", () => {
-  texture.needsUpdate = true;
-});
+loadingManager.onStart = () => {
+  console.log("Loading started");
+};
 
-image.src = "../static/textures/door/color.jpg";
+loadingManager.onLoad = () => {
+  console.log("Loading finished");
+};
 
-const tweenGroup = new Group();
+loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+  console.log(
+    `Started loading file: ${url}. Loaded ${itemsLoaded} of ${itemsTotal} files`,
+  );
+};
+
+loadingManager.onError = (url) => {
+  console.log(`There was an error loading ${url}`);
+};
+
+const textureLoader = new THREE.TextureLoader();
+
+const colorTexture = textureLoader.load("../static/textures/door/color.jpg");
+colorTexture.colorSpace = THREE.SRGBColorSpace;
+const alphaTexture = textureLoader.load("../static/textures/door/alpha.jpg");
+alphaTexture.colorSpace = THREE.SRGBColorSpace;
+const heightTexture = textureLoader.load("../static/textures/door/height.jpg");
+heightTexture.colorSpace = THREE.SRGBColorSpace;
+const normalTexture = textureLoader.load("../static/textures/door/normal.jpg");
+normalTexture.colorSpace = THREE.SRGBColorSpace;
+const ambientOcclusionTexture = textureLoader.load(
+  "../static/textures/door/ambientOcclusion.jpg",
+);
+ambientOcclusionTexture.colorSpace = THREE.SRGBColorSpace;
+const metalnessTexture = textureLoader.load(
+  "../static/textures/door/metalness.jpg",
+);
+metalnessTexture.colorSpace = THREE.SRGBColorSpace;
+const roughnessTexture = textureLoader.load(
+  "../static/textures/door/roughness.jpg",
+);
+roughnessTexture.colorSpace = THREE.SRGBColorSpace;
 
 // Debug
+const tweenGroup = new Group();
+
 const gui = new GUI({
   width: 400,
   title: "Three.js Journey - Debug",
@@ -80,7 +113,7 @@ group.add(cube1);
 
 const cube2 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ map: texture }),
+  new THREE.MeshBasicMaterial({ map: colorTexture }),
 );
 cube2.position.x = 0;
 group.add(cube2);
