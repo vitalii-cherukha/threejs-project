@@ -12,7 +12,7 @@ interface WebkitHTMLElement extends HTMLElement {
   webkitRequestFullscreen?: () => Promise<void>;
 }
 
-// Textures
+// Loading Manager
 const loadingManager = new THREE.LoadingManager();
 
 loadingManager.onStart = () => {
@@ -33,28 +33,45 @@ loadingManager.onError = (url) => {
   console.log(`There was an error loading ${url}`);
 };
 
+// Textures Cube2
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
 const colorTexture = textureLoader.load("../static/textures/door/color.jpg");
 colorTexture.colorSpace = THREE.SRGBColorSpace;
+
 const alphaTexture = textureLoader.load("../static/textures/door/alpha.jpg");
 alphaTexture.colorSpace = THREE.SRGBColorSpace;
+
 const heightTexture = textureLoader.load("../static/textures/door/height.jpg");
 heightTexture.colorSpace = THREE.SRGBColorSpace;
+
 const normalTexture = textureLoader.load("../static/textures/door/normal.jpg");
 normalTexture.colorSpace = THREE.SRGBColorSpace;
+
 const ambientOcclusionTexture = textureLoader.load(
   "../static/textures/door/ambientOcclusion.jpg",
 );
 ambientOcclusionTexture.colorSpace = THREE.SRGBColorSpace;
+
 const metalnessTexture = textureLoader.load(
   "../static/textures/door/metalness.jpg",
 );
 metalnessTexture.colorSpace = THREE.SRGBColorSpace;
+
 const roughnessTexture = textureLoader.load(
   "../static/textures/door/roughness.jpg",
 );
 roughnessTexture.colorSpace = THREE.SRGBColorSpace;
+
+colorTexture.wrapS = THREE.MirroredRepeatWrapping;
+colorTexture.wrapT = THREE.MirroredRepeatWrapping;
+// colorTexture.repeat.x = 2;
+// colorTexture.repeat.y = 3
+// colorTexture.offset.x = 0.5
+// colorTexture.offset.y = 0.5
+// colorTexture.rotation = Math.PI * 0.25
+// colorTexture.center.x = 0.5
+// colorTexture.center.y = 0.5
 
 // Debug
 const tweenGroup = new Group();
@@ -111,29 +128,32 @@ const cube1 = new THREE.Mesh(
 cube1.position.x = -2;
 group.add(cube1);
 
-const cube2 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ map: colorTexture }),
-);
+// Cube 2 - Custom Geometry
+const geometry2 = new THREE.BoxGeometry(1, 1, 1);
+const material2 = new THREE.MeshBasicMaterial({ map: colorTexture });
+
+const cube2 = new THREE.Mesh(geometry2, material2);
+
 cube2.position.x = 0;
 group.add(cube2);
 
-const geometry = new THREE.BufferGeometry();
+// Cube 3 - Custom Geometry
+const geometry3 = new THREE.BufferGeometry();
 
-const count = 500;
+const count3 = 500;
 
-const positionsArray = new Float32Array(count * 3 * 3);
+const positionsArray3 = new Float32Array(count3 * 3 * 3);
 
-for (let i = 0; i < count * 3 * 3; i++) {
-  positionsArray[i] = Math.random() - 0.5;
+for (let i = 0; i < count3 * 3 * 3; i++) {
+  positionsArray3[i] = Math.random() - 0.5;
 }
 
-const positionAttribute = new THREE.BufferAttribute(positionsArray, 3);
+const positionAttribute3 = new THREE.BufferAttribute(positionsArray3, 3);
 
-geometry.setAttribute("position", positionAttribute);
+geometry3.setAttribute("position", positionAttribute3);
 
 const cube3 = new THREE.Mesh(
-  geometry,
+  geometry3,
 
   new THREE.MeshBasicMaterial({ color: debugObject.color, wireframe: true }),
 );
