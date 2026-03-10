@@ -73,6 +73,10 @@ colorTexture.wrapT = THREE.MirroredRepeatWrapping;
 // colorTexture.center.x = 0.5
 // colorTexture.center.y = 0.5
 
+colorTexture.generateMipmaps = false;
+colorTexture.minFilter = THREE.NearestFilter;
+colorTexture.magFilter = THREE.NearestFilter;
+
 // Debug
 const tweenGroup = new Group();
 
