@@ -10,6 +10,23 @@ const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
 // Scene
 const scene = new THREE.Scene();
 
+//
+//Objects
+//
+
+//MashBasicMaterial
+const material = new THREE.MashBasicMaterial();
+
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
+
+const torus = new THREE.Mesh(
+  new THREE.TorusGeometry(0.3, 0.2, 16, 32),
+  material,
+);
+
+scene.add(sphere, plane, torus);
+
 /**
  * Sizes
  */
