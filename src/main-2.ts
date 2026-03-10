@@ -10,15 +10,76 @@ const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
 // Scene
 const scene = new THREE.Scene();
 
+/**
+ * Textures
+ */
+const textureLoader = new THREE.TextureLoader();
+
+const doorColorTexture = textureLoader.load(
+  "../static/textures/door/color.jpg",
+);
+doorColorTexture.colorSpace = THREE.SRGBColorSpace;
+
+const doorAlphaTexture = textureLoader.load(
+  "../static/textures/door/alpha.jpg",
+);
+const doorAmbientOcclusionTexture = textureLoader.load(
+  "../static/textures/door/ambientOcclusion.jpg",
+);
+const doorHeightTexture = textureLoader.load(
+  "../static/textures/door/height.jpg",
+);
+const doorNormalTexture = textureLoader.load(
+  "../static/textures/door/normal.jpg",
+);
+const doorRoughnessTexture = textureLoader.load(
+  "../static/textures/door/roughness.jpg",
+);
+const matcapTexture = textureLoader.load("../static/textures/matcaps/1.png");
+matcapTexture.colorSpace = THREE.SRGBColorSpace;
+
+const gradientTexture = textureLoader.load(
+  "../static/textures/gradients/3.jpg",
+);
+
 //
 //Objects
 //
 
 //MeshBasicMaterial
-const material = new THREE.MeshBasicMaterial();
+// const material = new THREE.MeshBasicMaterial();
+// material.map = doorColorTexture;
+// material.color = new THREE.Color("yellow");
+// material.wireframe = true;
+// material.transparent = true;
+// material.opacity = 0.5;
+// material.alphaMap = doorAlphaTexture;
+// material.side = THREE.DoubleSide;
+
+//MeshNormalMaterial
+// const material = new THREE.MeshNormalMaterial();
+// material.wireframe = true;
+
+//MeshMatcapMaterial
+// const material = new THREE.MeshMatcapMaterial();
+// material.matcap = matcapTexture;
+
+//MeshDepthMaterial
+// const material = new THREE.MeshDepthMaterial();
+
+//MeshLambertMaterial
+// const material = new THREE.MeshLambertMaterial();
+
+//MeshPhongMaterial
+const material = new THREE.MeshPhongMaterial();
+material.shininess = 100;
+material.specular = new THREE.Color("0x1188ff");
 
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
+sphere.position.x = -1.5;
+
 const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
+plane.position.x = 1.5;
 
 const torus = new THREE.Mesh(
   new THREE.TorusGeometry(0.3, 0.2, 16, 32),
@@ -26,6 +87,16 @@ const torus = new THREE.Mesh(
 );
 
 scene.add(sphere, plane, torus);
+
+//Light
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xffffff, 30);
+pointLight.position.x = 2;
+pointLight.position.y = 3;
+pointLight.position.z = 4;
+scene.add(pointLight);
 
 /**
  * Sizes
@@ -84,6 +155,15 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  // Update objects
+  sphere.rotation.y = 0.1 * elapsedTime;
+  plane.rotation.y = 0.1 * elapsedTime;
+  torus.rotation.y = 0.1 * elapsedTime;
+
+  sphere.rotation.x = -0.15 * elapsedTime;
+  plane.rotation.x = -0.15 * elapsedTime;
+  torus.rotation.x = -0.15 * elapsedTime;
 
   // Update controls
   controls.update();
