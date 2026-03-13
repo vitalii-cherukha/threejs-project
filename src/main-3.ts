@@ -30,7 +30,7 @@ fontLoader.load("../static/fonts/helvetiker_regular.typeface.json", (font) => {
   const textGeometry = new TextGeometry("Fanya", {
     font: font,
     size: 0.5,
-    depth: 0.2,
+    height: 0.2,
     curveSegments: 12,
     bevelEnabled: true,
     bevelThickness: 0.03,
@@ -38,6 +38,7 @@ fontLoader.load("../static/fonts/helvetiker_regular.typeface.json", (font) => {
     bevelOffset: 0,
     bevelSegments: 5,
   });
+  textGeometry.center();
   const textMaterial = new THREE.MeshBasicMaterial();
   textMaterial.wireframe = true;
   const text = new THREE.Mesh(textGeometry, textMaterial);
