@@ -16,6 +16,11 @@ const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
 // Scene
 const scene = new THREE.Scene();
 
+// Axes helper
+
+const axesHelper = new THREE.AxesHelper();
+scene.add(axesHelper);
+
 /**
  * Textures
  */
@@ -31,14 +36,24 @@ fontLoader.load("../static/fonts/helvetiker_regular.typeface.json", (font) => {
     font: font,
     size: 0.5,
     height: 0.2,
-    curveSegments: 4,
+    curveSegments: 5,
     bevelEnabled: true,
     bevelThickness: 0.03,
     bevelSize: 0.02,
     bevelOffset: 0,
     bevelSegments: 4,
   });
-  textGeometry.center();
+  // textGeometry.center();
+  textGeometry.computeBoundingBox();
+  const boundingBox = textGeometry.boundingBox;
+  if (boundingBox) {
+    textGeometry.translate(
+      -(boundingBox.max.x - 0.02) * 0.5,
+      -(boundingBox.max.y - 0.02) * 0.5,
+      -(boundingBox.max.z - 0.03) * 0.5,
+    );
+  }
+
   const textMaterial = new THREE.MeshBasicMaterial();
   textMaterial.wireframe = true;
   const text = new THREE.Mesh(textGeometry, textMaterial);
