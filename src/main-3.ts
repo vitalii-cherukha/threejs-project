@@ -31,12 +31,12 @@ fontLoader.load("../static/fonts/helvetiker_regular.typeface.json", (font) => {
     font: font,
     size: 0.5,
     height: 0.2,
-    curveSegments: 12,
+    curveSegments: 4,
     bevelEnabled: true,
     bevelThickness: 0.03,
     bevelSize: 0.02,
     bevelOffset: 0,
-    bevelSegments: 5,
+    bevelSegments: 4,
   });
   textGeometry.center();
   const textMaterial = new THREE.MeshBasicMaterial();
