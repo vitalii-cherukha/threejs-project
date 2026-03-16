@@ -25,6 +25,8 @@ scene.add(axesHelper);
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const matcapTexture = textureLoader.load("../static/textures/matcaps/1.png");
+matcapTexture.colorSpace = THREE.SRGBColorSpace;
 
 /**
  * FontLoader
@@ -54,8 +56,9 @@ fontLoader.load("../static/fonts/helvetiker_regular.typeface.json", (font) => {
     );
   }
 
-  const textMaterial = new THREE.MeshBasicMaterial();
-  textMaterial.wireframe = true;
+  const textMaterial = new THREE.MeshMatcapMaterial();
+  textMaterial.matcap = matcapTexture;
+  // textMaterial.wireframe = true;
   const text = new THREE.Mesh(textGeometry, textMaterial);
   scene.add(text);
 });
