@@ -25,7 +25,7 @@ scene.add(axesHelper);
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
-const matcapTexture = textureLoader.load("../static/textures/matcaps/5.png");
+const matcapTexture = textureLoader.load("/textures/matcaps/5.png");
 matcapTexture.colorSpace = THREE.SRGBColorSpace;
 
 /**
@@ -33,7 +33,7 @@ matcapTexture.colorSpace = THREE.SRGBColorSpace;
  */
 const fontLoader = new FontLoader();
 
-fontLoader.load("../static/fonts/helvetiker_regular.typeface.json", (font) => {
+fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   const textGeometry = new TextGeometry("Fanya", {
     font: font,
     size: 0.5,
