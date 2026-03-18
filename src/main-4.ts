@@ -19,12 +19,19 @@ const scene = new THREE.Scene();
  */
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
 scene.add(ambientLight);
+gui.add(ambientLight, "intensity").min(0).max(3).step(0.001);
 
-const pointLight = new THREE.PointLight(0xffffff, 50);
-pointLight.position.x = 2;
-pointLight.position.y = 3;
-pointLight.position.z = 4;
-scene.add(pointLight);
+const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.9);
+scene.add(directionalLight);
+
+const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.9);
+scene.add(hemisphereLight);
+
+// const pointLight = new THREE.PointLight(0xffffff, 50);
+// pointLight.position.x = 2;
+// pointLight.position.y = 3;
+// pointLight.position.z = 4;
+// scene.add(pointLight);
 
 /**
  * Objects
