@@ -30,8 +30,26 @@ scene.add(hemisphereLight);
 
 const pointLight = new THREE.PointLight(0xff9000, 1.5, 10, 2);
 pointLight.position.set(1, -0.5, 1);
-
 scene.add(pointLight);
+
+const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 6, 1, 1);
+rectAreaLight.position.set(-1.5, 0, 1.5);
+rectAreaLight.lookAt(new THREE.Vector3());
+scene.add(rectAreaLight);
+
+const spotLight = new THREE.SpotLight(
+  0x78ff00,
+  4.5,
+  10,
+  Math.PI * 0.1,
+  0.25,
+  1,
+);
+spotLight.position.set(0, 2, 3);
+scene.add(spotLight);
+
+spotLight.target.position.x = -0.75;
+scene.add(spotLight.target);
 
 /**
  * Objects
